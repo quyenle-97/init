@@ -1,0 +1,1023 @@
+openapi: 3.0.0
+info:
+  title: SOA Test BE
+  description: APIs for SOA Test BE
+  version: 1.0.0
+servers:
+  - url: https://{host}/{basePath}
+    description: Production server
+    variables:
+      host:
+        default: api.example.com
+        description: API host
+      basePath:
+        default: api/soa/v1
+        description: Base path for all API endpoints
+paths:
+  /categories/list:
+    post:
+      summary: Get All Categories
+      description: Returns a list of categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchPayload'
+      responses:
+        '200':
+          description: A JSON array of categories objects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Category'
+                    required:
+                      - records
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Bad Request
+  /categories:
+    post:
+      summary: Create a new category
+      description: Creates a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreate'
+      responses:
+        '200':
+          description: category created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/Category'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '422':
+          description: Invalid input
+  /categories/{uid}:
+    put:
+      summary: Update a category
+      description: Updates an existing Category's information
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the category to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdate'
+      responses:
+        '200':
+          description: category updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/Category'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Invalid input
+        '404':
+          description: Category not found
+    delete:
+      summary: Delete a category
+      description: Deletes a category
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the category to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Category deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                required:
+                  - meta
+                  - data
+        '404':
+          description: Category not found
+
+  /cities/list:
+    post:
+      summary: Get All Cities
+      description: Returns a list of Cities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchPayload'
+      responses:
+        '200':
+          description: A JSON array of categories objects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/City'
+                    required:
+                      - records
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Bad Request
+  /cities:
+    post:
+      summary: Create a new city
+      description: Creates a new city
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreate'
+      responses:
+        '200':
+          description: city created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/City'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '422':
+          description: Invalid input
+  /cities/{uid}:
+    put:
+      summary: Update a city
+      description: Updates an existing city's information
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the city to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CityUpdate'
+      responses:
+        '200':
+          description: city updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/City'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Invalid input
+        '404':
+          description: Category not found
+    delete:
+      summary: Delete a city
+      description: Deletes a city
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the city to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: City deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                required:
+                  - meta
+                  - data
+        '404':
+          description: City not found
+
+  /suppliers/list:
+    post:
+      summary: Get All suppliers
+      description: Returns a list of suppliers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchPayload'
+      responses:
+        '200':
+          description: A JSON array of suppliers objects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Supplier'
+                    required:
+                      - records
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Bad Request
+  /suppliers:
+    post:
+      summary: Create a new supplier
+      description: Creates a new supplier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierCreate'
+      responses:
+        '200':
+          description: suppliers created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/Supplier'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '422':
+          description: Invalid input
+  /suppliers/{uid}:
+    put:
+      summary: Update a supplier
+      description: Updates an existing supplier's information
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the supplier to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierUpdate'
+      responses:
+        '200':
+          description: supplier updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/Supplier'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Invalid input
+        '404':
+          description: supplier not found
+    delete:
+      summary: Delete a supplier
+      description: Deletes a supplier
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the supplier to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: supplier deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                required:
+                  - meta
+                  - data
+        '404':
+          description: supplier not found
+
+  /products/list:
+    post:
+      summary: Get All products
+      description: Returns a list of products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductSearch'
+      responses:
+        '200':
+          description: A JSON array of products objects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+                    required:
+                      - records
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Bad Request
+  /products:
+    post:
+      summary: Create a new product
+      description: Creates a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+      responses:
+        '200':
+          description: product created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/Product'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '422':
+          description: Invalid input
+  /products/{uid}:
+    get:
+      summary: Get a product
+      description: get a product
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the product to update
+          schema:
+            type: string
+      responses:
+        '200':
+          description: get product successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/Product'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+    put:
+      summary: Update a product
+      description: Updates an existing product's information
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the product to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+      responses:
+        '200':
+          description: supplier product successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/Product'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+        '400':
+          description: Invalid input
+        '404':
+          description: product not found
+    delete:
+      summary: Delete a product
+      description: Deletes a product
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID of the product to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: product deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                required:
+                  - meta
+                  - data
+        '404':
+          description: supplier not found
+  /products/{uid}/distance:
+    get:
+      summary: Distance to location
+      description: distance to location
+      responses:
+        '200':
+          description: product created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: number
+                    example: 3.4
+                required:
+                  - meta
+                  - data
+
+  /statistics/products-per-category:
+    get:
+      summary: Products per category
+      description: Products per category
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/UuidIntMap'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+  /statistics/products-per-supplier:
+    get:
+      summary: Products per supplier
+      description: Products per supplier
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      record:
+                        $ref: '#/components/schemas/UuidIntMap'
+                    required:
+                      - record
+                required:
+                  - meta
+                  - data
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        request_id:
+          type: string
+          format: uuid
+          example: "1aaf47cc-b4ea-4a4c-9fb7-0768cc7de128"
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "success"
+        time:
+          type: string
+          format: date-time
+          example: "2025-03-16 15:35:37"
+        pagination:
+          type: object
+          properties:
+            limit:
+              type: integer
+              default: 20
+            offset:
+              type: integer
+              default: 0
+      required:
+        - request_id
+        - code
+        - message
+        - time
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "5268d217-58f6-4d83-a7a1-a52605e3786a"
+        name:
+          type: string
+          example: "Electronics"
+        status:
+          type: integer
+          example: 1
+        created_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T13:07:28.437235Z"
+        updated_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T13:07:28.437235Z"
+        deleted_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+      required:
+        - id
+        - name
+        - status
+        - created_time
+        - updated_time
+    CategoryCreate:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    CategoryUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: integer
+    SearchPayload:
+      type: object
+      properties:
+        search:
+          type: string
+    City:
+      type: object
+      properties:
+        ID:
+          type: string
+          format: uuid
+          example: "dd6bec56-e7cf-4ef8-8488-0e41281c91e8"
+          description: Unique identifier for the location
+        name:
+          type: string
+          example: "Maple Grove"
+          description: Name of the location
+        latitude:
+          type: number
+          format: float
+          example: 45.0724
+          description: Latitude coordinate of the location
+        longitude:
+          type: number
+          format: float
+          example: 93.4557
+          description: Longitude coordinate of the location
+        created_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T13:20:22.531526Z"
+          description: Timestamp when the location was created
+        updated_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T13:20:22.531526Z"
+          description: Timestamp when the location was last updated
+        deleted_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: Timestamp when the location was deleted, null if not deleted
+      required:
+        - ID
+        - name
+        - latitude
+        - longitude
+        - created_time
+        - updated_time
+    CityCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+        - name
+        - latitude
+        - longitude
+    CityUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+    Supplier:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "5268d217-58f6-4d83-a7a1-a52605e3786a"
+        name:
+          type: string
+          example: "Demo"
+        status:
+          type: integer
+          example: 1
+        created_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T13:07:28.437235Z"
+        updated_time:
+          type: string
+          format: date-time
+          example: "2025-03-15T13:07:28.437235Z"
+        deleted_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+      required:
+        - id
+        - name
+        - status
+        - created_time
+        - updated_time
+    SupplierCreate:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    SupplierUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: integer
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "c5ec2b98-b9c6-41d3-9514-2c7c4575c4a1"
+          description: Unique identifier for the product
+        reference:
+          type: string
+          example: "PROD-202503-001"
+          description: Product reference code
+        name:
+          type: string
+          example: "demo"
+          description: Name of the product
+        status:
+          type: integer
+          example: 1
+          description: Status of the product (e.g., 1 for active)
+        price:
+          type: string
+          example: "300"
+          description: Price of the product
+        quantity:
+          type: integer
+          example: 20
+          description: Available quantity of the product
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          description: Categories associated with the product
+        city_id:
+          type: string
+          format: uuid
+          example: "dd6bec56-e7cf-4ef8-8488-0e41281c91e8"
+          description: ID of the city where the product is located
+        city:
+          $ref: '#/components/schemas/City'
+        supplier_id:
+          type: string
+          format: uuid
+          example: "324e390b-d895-40b6-9f61-fb3339aa3a47"
+          description: ID of the product supplier
+        supplier:
+          $ref: '#/components/schemas/Supplier'
+        created_time:
+          type: string
+          format: date-time
+          example: "2025-03-16T10:11:46.988146Z"
+          description: Timestamp when the product was created
+        updated_time:
+          type: string
+          format: date-time
+          example: "2025-03-16T10:11:46.988146Z"
+          description: Timestamp when the product was last updated
+        deleted_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: null
+          description: Timestamp when the product was deleted, null if not deleted
+      required:
+        - id
+        - name
+        - status
+        - created_time
+        - updated_time
+    ProductCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "demo"
+        price:
+          type: number
+          format: float
+          example: 300
+        quantity:
+          type: integer
+          example: 20
+        status:
+          type: integer
+          example: 1
+        categories:
+          type: array
+          items:
+            type: string
+          example:
+            - "5268d217-58f6-4d83-a7a1-a52605e3786a"
+            - "23bae8b1-1c4a-4cf1-a8b9-193fa98a094b"
+        city_id:
+          type: string
+          format: uuid
+          example: "dd6bec56-e7cf-4ef8-8488-0e41281c91e8"
+        supplier_id:
+          type: string
+          format: uuid
+          example: "324e390b-d895-40b6-9f61-fb3339aa3a47"
+      required:
+        - name
+        - price
+        - quantity
+        - status
+        - categories
+        - city_id
+        - supplier_id
+    ProductSearch:
+      type: object
+      properties:
+        references:
+          type: array
+          items:
+            type: string
+          example:
+            - "PROD-202503-001"
+        names:
+          type: array
+          items:
+            type: string
+          example:
+            - "demo"
+        add_from:
+          type: string
+          example: "2025-03-15T10:00:00Z"
+        add_to:
+          type: string
+          example: "2025-03-15T10:00:00Z"
+        Status:
+          type: array
+          items:
+            type: integer
+          example:
+            - 1
+            - 2
+        categories:
+          type: array
+          items:
+            type: string
+          example:
+            - "5268d217-58f6-4d83-a7a1-a52605e3786a"
+            - "23bae8b1-1c4a-4cf1-a8b9-193fa98a094b"
+        cities:
+          type: array
+          items:
+            type: string
+          example:
+            - "dd6bec56-e7cf-4ef8-8488-0e41281c91e8"
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 20
+      required:
+        - references
+        - names
+        - add_from
+        - add_to
+        - Status
+        - categories
+        - cities
+        - offset
+        - limit
+    UuidIntMap:
+      type: object
+      additionalProperties:
+        type: integer
+      example:
+        "23bae8b1-1c4a-4cf1-a8b9-193fa98a094b": 50
+        "5268d217-58f6-4d83-a7a1-a52605e3786a": 50
