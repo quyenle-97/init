@@ -1,9 +1,9 @@
 package transports
 
 import (
-	"github.com/Minh2009/pv_soa/cfg"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/gorilla/mux"
+	"github.com/quyenle-97/init/cfg"
 	"net/http"
 	"os"
 )

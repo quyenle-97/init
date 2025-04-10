@@ -1,12 +1,10 @@
 package migrations
 
-import "github.com/Minh2009/pv_soa/pkgs/rdbms"
+import "github.com/quyenle-97/init/pkgs/rdbms"
 
 func MigrationLists() []rdbms.MFile {
 	return []rdbms.MFile{
-		CreateCategoriesTable{},
-		CreateCitiesTable{},
-		CreateSupplierTable{},
-		CreateProductsTable{},
+		EventsTable{},
+		ProjectionsTable{},
 	}
 }

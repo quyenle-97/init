@@ -2,7 +2,7 @@ package rdbms
 
 import (
 	"context"
-	"github.com/Minh2009/pv_soa/pkgs/utils"
+	"github.com/quyenle-97/init/pkgs/utils"
 	"github.com/uptrace/bun"
 	"log"
 	"time"

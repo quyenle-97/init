@@ -1,12 +1,10 @@
 package server
 
 import (
-	"github.com/Minh2009/pv_soa/cfg"
-	"github.com/Minh2009/pv_soa/internal/kit/services"
-	"github.com/Minh2009/pv_soa/internal/kit/transports"
-	"github.com/Minh2009/pv_soa/pkgs/log"
-	"github.com/Minh2009/pv_soa/pkgs/utils"
-	"github.com/oschwald/geoip2-golang"
+	"github.com/gorilla/mux"
+	"github.com/quyenle-97/init/cfg"
+	"github.com/quyenle-97/init/pkgs/log"
+	"github.com/quyenle-97/init/pkgs/utils"
 	"github.com/redis/go-redis/v9"
 	"github.com/sirupsen/logrus"
 	"github.com/uptrace/bun"
@@ -50,44 +48,26 @@ func AppMiddleware(handler http.Handler, lg *log.MultiLogger) http.Handler {
 	)
 }
 
-func Routing(c cfg.Config, db *bun.DB, log *log.MultiLogger, cache redis.UniversalClient) *http.ServeMux {
-	mux := http.NewServeMux()
+func Routing(c cfg.Config, db *bun.DB, log *log.MultiLogger, cache redis.UniversalClient) *mux.Router {
 
-	swagHttp := transports.SwaggerHttpHandler(c)
-	mux.Handle("/", swagHttp) //don't delete or change this!!
-	mux.HandleFunc("/__health", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte(http.StatusText(http.StatusOK)))
-	})
+	//// Thiết lập các route cho logistics
+	//// Sử dụng gorilla/mux router để xử lý các route logistics
+	r := mux.NewRouter()
+	//// Kết hợp các handler từ logistics với các handler hiện tại
+	SetupLogisticsRoutes(r, db, log, c)
 
-	cateSvc := services.NewCategorySvc(db, log)
-	cateTrans := transports.CategoryHttpHandler(cateSvc, log, c)
-	mux.Handle(utils.UrlWithPrefix("categories", c.BasePath), cateTrans)
-	mux.Handle(utils.UrlWithPrefix("categories/", c.BasePath), cateTrans)
+	return r
+}
 
-	citySvc := services.NewCitySvc(db, log)
-	cityTrans := transports.CityHttpHandler(citySvc, log, c)
-	mux.Handle(utils.UrlWithPrefix("cities", c.BasePath), cityTrans)
-	mux.Handle(utils.UrlWithPrefix("cities/", c.BasePath), cityTrans)
+// getRoutes là một hàm helper để lấy tất cả các route từ mux
+func getRoutes(mux *mux.Router) map[string]http.Handler {
+	routes := make(map[string]http.Handler)
 
-	supplierSvc := services.NewSupplierSvc(db, log)
-	supplierTrans := transports.SupplierHttpHandler(supplierSvc, log, c)
-	mux.Handle(utils.UrlWithPrefix("suppliers", c.BasePath), supplierTrans)
-	mux.Handle(utils.UrlWithPrefix("suppliers/", c.BasePath), supplierTrans)
+	// Đây là một cách đơn giản hóa, thực tế bạn cần triển khai logic
+	// để lấy tất cả các route từ mux
 
-	geoIPReader, err := geoip2.Open("GeoLite2-City.mmdb")
-	if err != nil {
-		panic(err)
-	}
+	// Trong thực tế, nếu bạn sử dụng gorilla/mux, bạn có thể lấy các route thông qua
+	// r.Walk() để lấy tất cả các route và bổ sung vào mux chính
 
-	productSvc := services.NewProductSvc(db, log, cateSvc, citySvc, supplierSvc, geoIPReader, cache)
-	productTrans := transports.ProductHttpHandler(productSvc, log, c)
-	mux.Handle(utils.UrlWithPrefix("products", c.BasePath), productTrans)
-	mux.Handle(utils.UrlWithPrefix("products/", c.BasePath), productTrans)
-
-	statisticsSvc := services.NewStatisticsSvc(db, cache, log)
-	statisticsTrans := transports.StatisticsHttpHandler(statisticsSvc, log, c)
-	mux.Handle(utils.UrlWithPrefix("statistics/", c.BasePath), statisticsTrans)
-
-	return mux
+	return routes
 }

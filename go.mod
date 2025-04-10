@@ -1,4 +1,4 @@
-module github.com/Minh2009/pv_soa
+module github.com/quyenle-97/init
 
 go 1.23.0
 

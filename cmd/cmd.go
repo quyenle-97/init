@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/Minh2009/pv_soa/cfg"
-	"github.com/Minh2009/pv_soa/internal/models"
-	"github.com/Minh2009/pv_soa/migrations"
-	"github.com/Minh2009/pv_soa/pkgs/rdbms"
+	"github.com/quyenle-97/init/cfg"
+	"github.com/quyenle-97/init/internal/models"
+	"github.com/quyenle-97/init/migrations"
+	"github.com/quyenle-97/init/pkgs/rdbms"
 	"os"
 )
 

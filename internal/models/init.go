@@ -23,5 +23,4 @@ type GEO struct {
 }
 
 func Init(db *bun.DB) {
-	db.RegisterModel((*ProductCategory)(nil))
 }
